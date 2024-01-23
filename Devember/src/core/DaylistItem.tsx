@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
       },  
       textStyle: {
         fontSize:35,
-        color:'black'
+        color:'black',
+        fontFamily:'AmaticR'
       }
 });
 
