@@ -1,11 +1,14 @@
+import { Link } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 
 const DaylistItem = ({day}) => {
   return (
-    <View style={styles.box}>
+    <Link href={`(days)/day${day}`} asChild>
+    <Pressable style={styles.box}>
     <Text style={styles.textStyle}>{day}</Text>
-    </View>
+    </Pressable>
+    </Link>
   );
 };
 
@@ -13,7 +16,7 @@ const styles = StyleSheet.create({
     box: {
         flex:1,
         aspectRatio:1,
-        backgroundColor:'#B4E9F8',
+        backgroundColor:'#FDF2E9',
         borderRadius:20,
         alignItems:'center',
         justifyContent:'center',
