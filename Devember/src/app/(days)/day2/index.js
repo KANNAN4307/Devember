@@ -5,7 +5,7 @@ import { Stack } from 'expo-router';
 const Day2 = () => {
   return (
     <View style={styles.container}>
-       <Stack.Screen options={{title:'Day 1'}}/>
+       <Stack.Screen options={{title:'Day 2'}}/>
       <Text>thsi is day 2</Text>
     </View>
   );
