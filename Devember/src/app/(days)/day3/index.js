@@ -1,10 +1,16 @@
+import { Link, Stack } from 'expo-router';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 const Day3 = () => {
   return (
     <View style={styles.container}>
-      <Text>day 3</Text>
+        <Stack.Screen options={{title:'Day 3'}}/>
+      <Link asChild href={'day3/editor'}>
+       <Button 
+       title='Go to Editor Page'
+       />
+       </Link>
     </View>
   );
 };
