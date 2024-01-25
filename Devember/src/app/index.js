@@ -1,4 +1,4 @@
-import DaylistItem from '@/components/DaylistItem';
+import DaylistItem from '../components/DaylistItem';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, FlatList, } from 'react-native';
 

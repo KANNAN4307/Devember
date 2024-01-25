@@ -1,8 +1,12 @@
 import { Stack, router } from 'expo-router';
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Pressable, Platform } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { StatusBar } from 'expo-status-bar'
+import { StatusBar } from 'expo-status-bar';
+import { GestureDetector, Gesture, Directions } from 'react-native-gesture-handler';
+import Animated,{ SlideInRight, SlideOutLeft,RollInRight, RollOutLeft } from 'react-native-reanimated';
+
+
 const Onboardingarray = [
     {
         icon:'snowflake',
@@ -42,12 +46,29 @@ const Onboarding = () => {
         router.back();
     }
 
+    const SwipebackHandler = () => {
+      // alert('koii')
+      if(selectedIndex===0){
+        BackHandler();
+      }
+      else{
+        setselectedindex(selectedIndex - 1)
+      }
+    }
+
+
+    const composed = Gesture.Simultaneous(
+      Gesture.Fling().direction(Directions.LEFT).onEnd(ButoonHanlder),
+      Gesture.Fling().direction(Directions.RIGHT).onEnd(SwipebackHandler),
+    )
+
 
   return (
     <SafeAreaView style={styles.container}>
         <Stack.Screen options={{headerShown:false}}/>
         <StatusBar style='light'/>
-        <View style={styles.pagecontent}>
+        <GestureDetector gesture={composed}>
+        <View style={styles.pagecontent} key={selectedIndex}>
 
           
                        
@@ -55,21 +76,39 @@ const Onboarding = () => {
             {
                 Onboardingarray.map((val, index) => {
                     return (
-                    <View style={{...styles.stepindicator, backgroundColor:index ==selectedIndex ? '#CEF202':'#ccc' }}/>
+                    <View key={index} style={{...styles.stepindicator, backgroundColor:index ==selectedIndex ? '#CEF202':'#ccc' }}/>
                     )
         })
     }
              </View>
               
-
+        <Animated.View
+        
+        entering={RollInRight.duration(250)}
+        exiting={RollOutLeft}
+        >
         <FontAwesome5 style={styles.icon} name={Listarray.icon} size={100} color="#CEF202" />
+        </Animated.View >
+     
 
         <View style={styles.footer}>
-            <Text style={styles.title}>{Listarray.title}</Text>
-            <Text style={styles.description}>{Listarray.descriptionL}</Text>
+            <Animated.Text 
+            entering={SlideInRight}
+            exiting={SlideOutLeft}
+            style={styles.title}>
+            {Listarray.title}
+            </Animated.Text>
+
+            <Animated.Text   
+            entering={SlideInRight.delay(150)}
+            exiting={SlideOutLeft}
+            style={styles.description}>
+              {Listarray.descriptionL}
+              </Animated.Text >
+
+
         <View style={styles.buttonrow}>    
-            <Text onPress={BackHandler} style={styles.buttonText}>Skip</Text>
-            
+            <Text onPress={BackHandler} style={styles.buttonText}>Skip</Text>            
             <Pressable style={styles.button} onPress={ButoonHanlder}>
             <Text style={styles.buttonText}>Continue</Text>
             </Pressable>
@@ -78,7 +117,7 @@ const Onboarding = () => {
         
         </View>
         </View>
-      
+        </GestureDetector>
     </SafeAreaView>
   );
 };
@@ -94,7 +133,9 @@ const styles = StyleSheet.create({
   pagecontent:{
     // backgroundColor:'red',
     padding:15,
-    flex:1
+    flex:1,
+    marginTop:Platform.OS== "ios" ? 0 : 25
+
   },
   icon:{
     alignSelf:'center',
