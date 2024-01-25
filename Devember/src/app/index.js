@@ -1,18 +1,18 @@
+import DaylistItem from '../components/DaylistItem';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, FlatList } from 'react-native';
-import DaylistItem from './src/core/DaylistItem';
+import { StyleSheet, View, FlatList, } from 'react-native';
+
+
+const days = [...Array(24)].map((val,index) => index +1);
 
 export default function App() {
-
-  const days = [...Array(24)].map((val,index) => index +1)
-
   return (
     <View style={styles.container}>
-
         <FlatList 
         data={days}
         contentContainerStyle={styles.content}
         columnWrapperStyle={styles.column}
+        showsVerticalScrollIndicator={false}
         numColumns={2}
         renderItem={({item}) => {
           return (
@@ -38,7 +38,5 @@ const styles = StyleSheet.create({
     padding:10
   },
   column:{gap:10},
-
-
 
 });
